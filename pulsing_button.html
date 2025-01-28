@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pulsing Image with Audio</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            background-color: black;
+        }
+        #startButton {
+            background: url('red-button-isolated-on-white-background-free-vector.jpg') no-repeat center;
+            background-size: contain;
+            width: 150px;
+            height: 150px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #imageContainer {
+            display: none;
+            position: relative;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            transition: transform 0.1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <button id="startButton"></button>
+    <div id="imageContainer">
+        <img id="pulsingImage" src="gack.jpeg" alt="Pulsing Image">
+        <audio id="audio" src="gack.m4a" loop></audio>
+    </div>
+
+    <script>
+        let clickCount = 0;
+        const startButton = document.getElementById("startButton");
+        startButton.addEventListener("click", function() {
+            clickCount++;
+            startButton.style.transform = "scale(1.1)";
+            setTimeout(() => {
+                startButton.style.transform = "scale(1)";
+            }, 100);
+            
+            if (clickCount === 3) {
+                startButton.style.display = "none";
+                document.getElementById("imageContainer").style.display = "block";
+                const audio = document.getElementById("audio");
+                const image = document.getElementById("pulsingImage");
+                audio.play();
+                
+                function pulse() {
+                    let scale = 1 + Math.random() * 0.2;
+                    image.style.transform = `scale(${scale})`;
+                }
+                setInterval(pulse, 150);
+            }
+        });
+    </script>
+</body>
+</html>
